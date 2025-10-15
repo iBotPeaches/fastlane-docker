@@ -1,13 +1,13 @@
 FROM circleci/ruby:2.7-node
 
-ENV XAR_VERSION "2.0.0"
+ENV XAR_VERSION="2.0.0"
 USER root
 
 # iTMSTransporter needs java installed
 # We also have to install make to install xar
 # And finally shellcheck
-RUN echo 'deb http://archive.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list \
-  && sed -i '/deb http:\/\/deb.debian.org\/debian jessie-updates main/d' /etc/apt/sources.list \
+RUN echo 'deb http://archive.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/stretch-backports.list \
+  && sed -i '/deb http:\/\/deb.debian.org\/debian stretch-updates main/d' /etc/apt/sources.list \
   && apt-get -o Acquire::Check-Valid-Until=false update \
   && apt-get install --yes \
     make \
@@ -32,19 +32,19 @@ RUN tar -xzf $XAR_VERSION.tar.gz \
   && ./configure \
   && make 
 
-ENV PATH $PATH:/usr/local/itms/bin
+ENV PATH=$PATH:/usr/local/itms/bin
 
 # Java versions to be installed
-ENV JAVA_VERSION 8u131
-ENV JAVA_DEBIAN_VERSION 8u131-b11-1~bpo8+1
-ENV CA_CERTIFICATES_JAVA_VERSION 20161107~bpo8+1
+ENV JAVA_VERSION=8u131
+ENV JAVA_DEBIAN_VERSION=8u131-b11-1~bpo8+1
+ENV CA_CERTIFICATES_JAVA_VERSION=20161107~bpo8+1
 
 # Needed for fastlane to work
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Required for iTMSTransporter to find Java
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/jre
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 
 # Install Python
 ARG BUILDDIR="/tmp/build"
