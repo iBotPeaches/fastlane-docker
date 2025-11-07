@@ -1,6 +1,6 @@
 FROM cimg/ruby:3.3-node
 
-ENV XAR_VERSION "2.0.0"
+ENV XAR_VERSION="2.0.0"
 USER root
 
 # Install dependencies for building Python and xar
@@ -28,12 +28,12 @@ RUN tar -xzf $XAR_VERSION.tar.gz \
   && make
 
 # Needed for fastlane to work
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
 
 # Required for iTMSTransporter to find Java
-ENV PATH $PATH:/usr/local/itms/bin
-ENV JAVA_HOME /usr/lib/jvm/java-21-openjdk-amd64/jre
+ENV PATH=$PATH:/usr/local/itms/bin
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64/jre
 
 # Install Python
 ARG BUILDDIR="/tmp/build"
