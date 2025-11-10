@@ -46,7 +46,17 @@ cd Python-${PYTHON_VER} && \
 ./configure  > /dev/null 2>&1 && \
 make > /dev/null 2>&1 && \
 make install > /dev/null 2>&1 && \
-rm -rf ${BUILDDIR} 
+rm -rf ${BUILDDIR}
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:0.6.6 /uv /bin/uv
+ENV UV_PYTHON_INSTALL_DIR=/opt/uv/python
+
+# Install pip & pipenv
+RUN wget --quiet https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py > /dev/null 2>&1 && \
+    python /tmp/get-pip.py && \
+    rm /tmp/get-pip.py && \
+    pip install pipenv
 
 USER circleci
 
