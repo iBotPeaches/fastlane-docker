@@ -4,6 +4,9 @@ ENV XAR_VERSION="2.0.0"
 USER root
 
 # Install dependencies for building Python and xar
+# gcc/make/libssl-dev/zlib1g-dev are needed to build xar/python
+# openjdk-21-jdk is needed for iTMSTransporter
+# shellcheck for linting shell scripts
 RUN apt-get update && apt-get install --yes \
         gcc \
         make \
@@ -17,7 +20,7 @@ RUN apt-get update && apt-get install --yes \
 WORKDIR /tmp
 
 # Build xar
-# Original download location  https://github.com/downloads/mackyle/xar/xar-$XAR_VERSION.tar.gz
+# Original: https://github.com/downloads/mackyle/xar/xar-$XAR_VERSION.tar.gz
 # Now using a fastlane fork that supports OpenSSL 1.1.0
 ADD https://github.com/fastlane/xar/archive/$XAR_VERSION.tar.gz .
 RUN tar -xzf $XAR_VERSION.tar.gz \
